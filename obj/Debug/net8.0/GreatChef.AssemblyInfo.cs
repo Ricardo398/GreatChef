@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GreatChef")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b226c6bc9b2072e5fa068332480ddd3f9b8d80d4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4ffcadf4ddaa5dca805ca6a2b4cf2f0760baaa2d")]
 [assembly: System.Reflection.AssemblyProductAttribute("GreatChef")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GreatChef")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

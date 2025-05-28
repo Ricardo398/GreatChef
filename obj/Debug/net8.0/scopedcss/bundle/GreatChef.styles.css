@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: #181818;
+    background: linear-gradient(rgba(24, 24, 24, 0.96), rgba(24, 24, 24, 0.96)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1920&auto=format&fit=crop&q=80') center/cover fixed no-repeat;
 }
 
 .header[b-radfjuvhh6] {
@@ -56,7 +56,7 @@
 
 .main-content[b-radfjuvhh6] {
     flex: 1;
-    background: transparent;
+    background-color: darkgoldenrod;
     min-height: calc(100vh - 72px);
     color: #fff;
 }
@@ -93,8 +93,9 @@
     color: #bbb !important;
 }
 
+
 .footer a:hover[b-radfjuvhh6] {
-    color: #fff !important;
+    color: #1557BA !important;
 }
 
 @media (max-width: 767.98px) {
@@ -285,8 +286,15 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     border-radius: 0.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.08);
+    transition: all 0.18s cubic-bezier(.4, 2, .3, 1);
+}
+
+.hero-section .btn:hover[b-iwg1d3kz0d] {
+    transform: translateY(-2px) scale(1.06);
+    box-shadow: 0 6px 18px rgba(13, 110, 253, 0.18);
+    filter: brightness(1.08);
+    z-index: 2;
 }
 
 .hero-section .btn-light[b-iwg1d3kz0d] {
@@ -343,11 +351,6 @@
     z-index: 2;
 }
 
-.menu-section .card:hover .card-img-top[b-iwg1d3kz0d] {
-    transform: scale(1.07);
-    filter: brightness(1.08) saturate(1.1);
-}
-
 .stats-section .bi[b-iwg1d3kz0d],
 .orders-section .bi[b-iwg1d3kz0d],
 .menu-section .bi[b-iwg1d3kz0d] {
@@ -387,7 +390,8 @@
 }
 
 .menu-section .card:hover .card-img-top[b-iwg1d3kz0d] {
-    transform: scale(1.05);
+    transform: scale(1.07);
+    filter: brightness(1.08) saturate(1.1);
 }
 
 .btn-outline-primary[b-iwg1d3kz0d] {
@@ -466,15 +470,15 @@ p[b-iwg1d3kz0d] {
     color: #adb5bd;
 }
 
-.hero-section .btn[b-iwg1d3kz0d],
-.btn-outline-primary[b-iwg1d3kz0d] {
-    transition: all 0.18s cubic-bezier(.4, 2, .3, 1);
-    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.08);
+.bi[b-iwg1d3kz0d],
+.card .bi[b-iwg1d3kz0d],
+.nav-link .bi[b-iwg1d3kz0d] {
+    transition: color 0.18s cubic-bezier(.4, 2, .3, 1);
+    transform: none !important;
 }
 
-.hero-section .btn:hover[b-iwg1d3kz0d],
-.btn-outline-primary:hover[b-iwg1d3kz0d] {
-    transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 6px 18px rgba(13, 110, 253, 0.18);
-    filter: brightness(1.08);
+.card:hover .bi[b-iwg1d3kz0d],
+.nav-link:hover .bi[b-iwg1d3kz0d] {
+    transform: scale(1.18);
+    color: #0d6efd !important;
 }

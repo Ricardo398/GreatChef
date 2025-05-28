@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: #181818;
+    background: linear-gradient(rgba(24, 24, 24, 0.96), rgba(24, 24, 24, 0.96)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1920&auto=format&fit=crop&q=80') center/cover fixed no-repeat;
 }
 
 .header[b-radfjuvhh6] {
@@ -55,7 +55,7 @@
 
 .main-content[b-radfjuvhh6] {
     flex: 1;
-    background: transparent;
+    background-color: darkgoldenrod;
     min-height: calc(100vh - 72px);
     color: #fff;
 }
@@ -92,8 +92,9 @@
     color: #bbb !important;
 }
 
+
 .footer a:hover[b-radfjuvhh6] {
-    color: #fff !important;
+    color: #1557BA !important;
 }
 
 @media (max-width: 767.98px) {
