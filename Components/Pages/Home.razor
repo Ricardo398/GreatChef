@@ -1,70 +1,230 @@
 ﻿@page "/"
 
-<PageTitle>Fast Food Manager</PageTitle>
-
-<div class="p-6 space-y-6">
-    <h1 class="text-3xl font-bold text-center">🍔 Fast Food Manager</h1>
-
-    <Tabs DefaultTab="orders">
-        <TabsList Class="grid grid-cols-4 bg-muted rounded-xl">
-            <TabsTrigger Tab="orders"><i class="fas fa-clock mr-1"></i> Orders</TabsTrigger>
-            <TabsTrigger Tab="menu"><i class="fas fa-hamburger mr-1"></i> Menu</TabsTrigger>
-            <TabsTrigger Tab="add"><i class="fas fa-plus-circle mr-1"></i> Add Item</TabsTrigger>
-            <TabsTrigger Tab="settings"><i class="fas fa-cog mr-1"></i> Settings</TabsTrigger>
-        </TabsList>
-
-        <TabsContent Tab="orders">
-            <div class="bg-white shadow rounded-xl p-4 space-y-4">
-                <h2 class="text-xl font-semibold">Current Orders</h2>
-                <div class="space-y-2">
-                    <div class="bg-gray-100 p-4 rounded-xl flex justify-between items-center">
-                        <span>Order #1234 - Cheeseburger Combo</span>
-                        <button class="btn btn-outline">Mark as Done</button>
-                    </div>
-                    <div class="bg-gray-100 p-4 rounded-xl flex justify-between items-center">
-                        <span>Order #1235 - Veggie Wrap</span>
-                        <button class="btn btn-outline">Mark as Done</button>
+<div class="home-page">
+    <!-- Hero Section -->
+    <section class="hero-section py-5 text-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">Gerencie seu Restaurante com Eficiência</h1>
+                    <p class="lead mb-4">Controle pedidos, estoque, funcionários e muito mais em um só lugar. A solução completa para seu restaurante.</p>
+                    <div class="d-flex gap-3">
+                        <a href="/pedidos" class="btn btn-light btn-lg">
+                            <i class="bi bi-cart me-2"></i>Ver Pedidos
+                        </a>
+                        <a href="/cardapio" class="btn btn-outline-light btn-lg">
+                            <i class="bi bi-menu-button-wide me-2"></i>Gerenciar Cardápio
+                        </a>
                     </div>
                 </div>
             </div>
-        </TabsContent>
+        </div>
+    </section>
 
-        <TabsContent Tab="menu">
-            <div class="bg-white shadow rounded-xl p-4">
-                <h2 class="text-xl font-semibold mb-4">Menu Items</h2>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-accent p-4 rounded-xl">
-                        <h3 class="text-lg font-bold">Cheeseburger</h3>
-                        <p>$5.99</p>
+    <!-- Quick Stats -->
+    <section class="stats-section py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-cart-check display-4 text-primary mb-3"></i>
+                            <h3 class="h2 mb-2">24</h3>
+                            <p class="text-muted mb-0">Pedidos Hoje</p>
+                        </div>
                     </div>
-                    <div class="bg-accent p-4 rounded-xl">
-                        <h3 class="text-lg font-bold">Fries</h3>
-                        <p>$2.99</p>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-currency-dollar display-4 text-success mb-3"></i>
+                            <h3 class="h2 mb-2">R$ 1.250</h3>
+                            <p class="text-muted mb-0">Faturamento Hoje</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-clock-history display-4 text-warning mb-3"></i>
+                            <h3 class="h2 mb-2">12 min</h3>
+                            <p class="text-muted mb-0">Tempo Médio de Entrega</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-star display-4 text-info mb-3"></i>
+                            <h3 class="h2 mb-2">4.8</h3>
+                            <p class="text-muted mb-0">Avaliação Média</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </TabsContent>
+        </div>
+    </section>
 
-        <TabsContent Tab="add">
-            <div class="bg-white shadow rounded-xl p-4 space-y-4">
-                <h2 class="text-xl font-semibold">Add New Menu Item</h2>
-                <Input Placeholder="Item Name" />
-                <Input Placeholder="Price" Type="number" />
-                <button class="btn btn-primary">Add Item</button>
+    <!-- Recent Orders -->
+    <section class="orders-section py-5">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">Pedidos Recentes</h2>
+                <a href="/pedidos" class="btn btn-outline-primary">Ver Todos</a>
             </div>
-        </TabsContent>
+            <div class="row g-4">
+                @foreach (var order in GetRecentOrders())
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h3 class="h5 card-title mb-0">Pedido #@order.Id</h3>
+                                    <span class="badge bg-@order.StatusColor">@order.Status</span>
+                                </div>
+                                <p class="card-text text-muted">@order.Items</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-clock me-2"></i>
+                                        <small class="text-muted">@order.TimeAgo</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <h4 class="h5 mb-0">@order.Total</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
 
-        <TabsContent Tab="settings">
-            <div class="bg-white shadow rounded-xl p-4 space-y-4">
-                <h2 class="text-xl font-semibold">Settings</h2>
-                <button class="btn btn-outline">Export Orders</button>
-                <button class="btn btn-danger">Clear All Orders</button>
+    <!-- Popular Items -->
+    <section class="menu-section py-5">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">Itens Mais Vendidos</h2>
+                <a href="/cardapio" class="btn btn-outline-primary">Ver Cardápio Completo</a>
             </div>
-        </TabsContent>
-    </Tabs>
+            <div class="row g-4">
+                @foreach (var item in GetPopularItems())
+                {
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <img src="@item.ImageUrl" 
+                                 class="card-img-top" 
+                                 alt="@item.Name" 
+                                 style="height: 160px; object-fit: cover;">
+                            <div class="card-body">
+                                <h3 class="h5 card-title">@item.Name</h3>
+                                <p class="card-text text-muted">@item.Description</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-graph-up me-2"></i>
+                                        <small class="text-muted">@item.Sales vendidos hoje</small>
+                                    </div>
+                                    <h4 class="h5 mb-0">@item.Price</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
 </div>
 
 @code {
-    // Here you can add C# code-behind for interaction
-    // You might create models for orders, menu items, etc.
+    private List<Order> GetRecentOrders()
+    {
+        return new List<Order>
+        {
+            new Order
+            {
+                Id = "1001",
+                Status = "Em Preparo",
+                StatusColor = "warning",
+                Items = "2x X-Burger, 1x Batata Frita, 1x Refrigerante",
+                TimeAgo = "5 min atrás",
+                Total = "R$ 45,90"
+            },
+            new Order
+            {
+                Id = "1002",
+                Status = "Entregue",
+                StatusColor = "success",
+                Items = "1x Combo Família, 2x Milk Shake",
+                TimeAgo = "15 min atrás",
+                Total = "R$ 89,90"
+            },
+            new Order
+            {
+                Id = "1003",
+                Status = "Aguardando",
+                StatusColor = "info",
+                Items = "3x X-Tudo, 1x Batata Frita Grande",
+                TimeAgo = "2 min atrás",
+                Total = "R$ 75,90"
+            }
+        };
+    }
+
+    private List<MenuItem> GetPopularItems()
+    {
+        return new List<MenuItem>
+        {
+            new MenuItem
+            {
+                Name = "X-Burger",
+                Description = "Hambúrguer artesanal com queijo e molho especial",
+                ImageUrl = "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=60",
+                Sales = 45,
+                Price = "R$ 19,90"
+            },
+            new MenuItem
+            {
+                Name = "Batata Frita",
+                Description = "Porção de batata frita crocante",
+                ImageUrl = "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800&auto=format&fit=crop&q=60",
+                Sales = 38,
+                Price = "R$ 12,90"
+            },
+            new MenuItem
+            {
+                Name = "Milk Shake",
+                Description = "Milk shake cremoso de chocolate",
+                ImageUrl = "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=800&auto=format&fit=crop&q=60",
+                Sales = 25,
+                Price = "R$ 15,90"
+            },
+            new MenuItem
+            {
+                Name = "Combo Família",
+                Description = "4 hambúrgueres, 2 batatas grandes e 4 refrigerantes",
+                ImageUrl = "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=800&auto=format&fit=crop&q=60",
+                Sales = 15,
+                Price = "R$ 89,90"
+            }
+        };
+    }
+
+    private class Order
+    {
+        public string Id { get; set; }
+        public string Status { get; set; }
+        public string StatusColor { get; set; }
+        public string Items { get; set; }
+        public string TimeAgo { get; set; }
+        public string Total { get; set; }
+    }
+
+    private class MenuItem
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string ImageUrl { get; set; }
+        public int Sales { get; set; }
+        public string Price { get; set; }
+    }
 }

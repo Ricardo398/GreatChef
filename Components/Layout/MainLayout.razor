@@ -1,23 +1,122 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Web
+@inject IJSRuntime JS
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<div class="layout-wrapper">
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="/">
+                    <i class="bi bi-egg-fried text-primary me-2"></i>
+                    <span class="fw-bold">GreatChef</span>
+                </a>
+                
+                <button class="navbar-toggler" type="button" @onclick="ToggleSidebar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/receitas">
+                                <i class="bi bi-book me-1"></i>Pedidos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/categorias">
+                                <i class="bi bi-tags me-1"></i>Categorias
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/favoritos">
+                                <i class="bi bi-heart me-1"></i>Favoritos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/sobre">
+                                <i class="bi bi-info-circle me-1"></i>Sobre
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-        <article class="content px-4">
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container py-4">
             @Body
-        </article>
+        </div>
     </main>
+
+    <!-- Footer -->
+    <footer class="footer bg-white border-top">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="mb-3">GreatChef</h5>
+                    <p class="text-muted">Descubra e compartilhe suas melhores receitas com o mundo.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Links Úteis</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/receitas" class="text-decoration-none text-muted">Receitas</a></li>
+                        <li><a href="/categorias" class="text-decoration-none text-muted">Categorias</a></li>
+                        <li><a href="/favoritos" class="text-decoration-none text-muted">Favoritos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Contato</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="mailto:contato@greatchef.com" class="text-decoration-none text-muted">
+                            <i class="bi bi-envelope me-2"></i>contato@greatchef.com
+                        </a></li>
+                        <li class="mt-2">
+                            <a href="#" class="text-decoration-none text-muted me-2">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                            <a href="#" class="text-decoration-none text-muted me-2">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                            <a href="#" class="text-decoration-none text-muted">
+                                <i class="bi bi-youtube"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center text-muted">
+                <small>&copy; @DateTime.Now.Year GreatChef. Todos os direitos reservados.</small>
+            </div>
+        </div>
+    </footer>
 </div>
 
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
+<!-- Error UI -->
+<div id="blazor-error-ui" class="alert alert-danger position-fixed bottom-0 end-0 m-3" role="alert">
+    <div class="d-flex align-items-center">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <span>Ocorreu um erro não tratado.</span>
+    </div>
+    <div class="mt-2">
+        <a href="" class="btn btn-sm btn-outline-danger me-2">Recarregar</a>
+        <button class="btn btn-sm btn-outline-danger" @onclick="DismissError">Fechar</button>
+    </div>
 </div>
+
+@code {
+    private bool _sidebarVisible = true;
+
+    private void ToggleSidebar()
+    {
+        _sidebarVisible = !_sidebarVisible;
+    }
+
+    private async Task DismissError()
+    {
+        await JS.InvokeVoidAsync("document.querySelector('#blazor-error-ui').classList.add", "d-none");
+    }
+}
