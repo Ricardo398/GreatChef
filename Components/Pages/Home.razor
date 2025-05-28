@@ -1,0 +1,70 @@
+﻿@page "/"
+
+<PageTitle>Fast Food Manager</PageTitle>
+
+<div class="p-6 space-y-6">
+    <h1 class="text-3xl font-bold text-center">🍔 Fast Food Manager</h1>
+
+    <Tabs DefaultTab="orders">
+        <TabsList Class="grid grid-cols-4 bg-muted rounded-xl">
+            <TabsTrigger Tab="orders"><i class="fas fa-clock mr-1"></i> Orders</TabsTrigger>
+            <TabsTrigger Tab="menu"><i class="fas fa-hamburger mr-1"></i> Menu</TabsTrigger>
+            <TabsTrigger Tab="add"><i class="fas fa-plus-circle mr-1"></i> Add Item</TabsTrigger>
+            <TabsTrigger Tab="settings"><i class="fas fa-cog mr-1"></i> Settings</TabsTrigger>
+        </TabsList>
+
+        <TabsContent Tab="orders">
+            <div class="bg-white shadow rounded-xl p-4 space-y-4">
+                <h2 class="text-xl font-semibold">Current Orders</h2>
+                <div class="space-y-2">
+                    <div class="bg-gray-100 p-4 rounded-xl flex justify-between items-center">
+                        <span>Order #1234 - Cheeseburger Combo</span>
+                        <button class="btn btn-outline">Mark as Done</button>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-xl flex justify-between items-center">
+                        <span>Order #1235 - Veggie Wrap</span>
+                        <button class="btn btn-outline">Mark as Done</button>
+                    </div>
+                </div>
+            </div>
+        </TabsContent>
+
+        <TabsContent Tab="menu">
+            <div class="bg-white shadow rounded-xl p-4">
+                <h2 class="text-xl font-semibold mb-4">Menu Items</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-accent p-4 rounded-xl">
+                        <h3 class="text-lg font-bold">Cheeseburger</h3>
+                        <p>$5.99</p>
+                    </div>
+                    <div class="bg-accent p-4 rounded-xl">
+                        <h3 class="text-lg font-bold">Fries</h3>
+                        <p>$2.99</p>
+                    </div>
+                </div>
+            </div>
+        </TabsContent>
+
+        <TabsContent Tab="add">
+            <div class="bg-white shadow rounded-xl p-4 space-y-4">
+                <h2 class="text-xl font-semibold">Add New Menu Item</h2>
+                <Input Placeholder="Item Name" />
+                <Input Placeholder="Price" Type="number" />
+                <button class="btn btn-primary">Add Item</button>
+            </div>
+        </TabsContent>
+
+        <TabsContent Tab="settings">
+            <div class="bg-white shadow rounded-xl p-4 space-y-4">
+                <h2 class="text-xl font-semibold">Settings</h2>
+                <button class="btn btn-outline">Export Orders</button>
+                <button class="btn btn-danger">Clear All Orders</button>
+            </div>
+        </TabsContent>
+    </Tabs>
+</div>
+
+@code {
+    // Here you can add C# code-behind for interaction
+    // You might create models for orders, menu items, etc.
+}
