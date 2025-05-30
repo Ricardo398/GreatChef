@@ -1,230 +1,290 @@
 ﻿@page "/"
+@using GreatChef.Models
+@using GreatChef.Repositories
+@inject IRestaurantRepository RestaurantRepository
+@inject IMenuItemRepository MenuItemRepository
+@inject IOrderRepository OrderRepository
 
 <div class="home-page">
-    <!-- Hero Section -->
-    <section class="hero-section py-5 text-white">
+    <section class="hero-section">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <h1 class="display-4 fw-bold mb-4">Gerencie seu Restaurante com Eficiência</h1>
-                    <p class="lead mb-4">Controle pedidos, estoque, funcionários e muito mais em um só lugar. A solução completa para seu restaurante.</p>
-                    <div class="d-flex gap-3">
-                        <a href="/pedidos" class="btn btn-light btn-lg">
-                            <i class="bi bi-cart me-2"></i>Ver Pedidos
-                        </a>
-                        <a href="/cardapio" class="btn btn-outline-light btn-lg">
-                            <i class="bi bi-menu-button-wide me-2"></i>Gerenciar Cardápio
-                        </a>
+            <h1 class="display-3 fw-bold mb-3">Bem-vindo ao GreatChef</h1>
+            <p class="lead mb-4">Gerencie seu restaurante de forma moderna, rápida e visual!</p>
+            <a href="#menu" class="btn btn-primary">Ver Cardápio</a>
+            <a href="#pedidos" class="btn btn-outline-primary">Pedidos</a>
+        </div>
+    </section>
+
+    <section class="stats-section cont">
+        <h2>Estatísticas Rápidas</h2>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-3 col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="bi bi-clock-history"></i>
+                        <h3>Pedidos Pendentes</h3>
+                        <p class="card-text">@PendingOrders?.Count()</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="bi bi-list-ul"></i>
+                        <h3>Itens no Menu</h3>
+                        <p class="card-text">@MenuItems?.Count()</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="bi bi-calendar-event"></i>
+                        <h3>Pedidos Hoje</h3>
+                        <p class="card-text">@TodayOrders?.Count()</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="bi bi-cash-coin"></i>
+                        <h3>Receita Hoje</h3>
+                        <p class="card-text">R$ @TodayRevenue.ToString("N2")</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Quick Stats -->
-    <section class="stats-section py-5">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-md-3">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body text-center">
-                            <i class="bi bi-cart-check display-4 text-primary mb-3"></i>
-                            <h3 class="h2 mb-2">24</h3>
-                            <p class="text-muted mb-0">Pedidos Hoje</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body text-center">
-                            <i class="bi bi-currency-dollar display-4 text-success mb-3"></i>
-                            <h3 class="h2 mb-2">R$ 1.250</h3>
-                            <p class="text-muted mb-0">Faturamento Hoje</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body text-center">
-                            <i class="bi bi-clock-history display-4 text-warning mb-3"></i>
-                            <h3 class="h2 mb-2">12 min</h3>
-                            <p class="text-muted mb-0">Tempo Médio de Entrega</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body text-center">
-                            <i class="bi bi-star display-4 text-info mb-3"></i>
-                            <h3 class="h2 mb-2">4.8</h3>
-                            <p class="text-muted mb-0">Avaliação Média</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section id="pedidos" class="orders-section cont">
+        <div class="d-flex justify-content-end mb-3">
+            <button class="btn btn-primary" @onclick="OpenNewOrderModal">
+                <i class="bi bi-plus-circle me-1"></i> Novo Pedido
+            </button>
         </div>
-    </section>
-
-    <!-- Recent Orders -->
-    <section class="orders-section py-5">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="mb-0">Pedidos Recentes</h2>
-                <a href="/pedidos" class="btn btn-outline-primary">Ver Todos</a>
-            </div>
-            <div class="row g-4">
-                @foreach (var order in GetRecentOrders())
+        <h2>Pedidos Pendentes</h2>
+        @if (PendingOrders?.Any() == true)
+        {
+            <div class="row g-4 justify-content-center">
+                @foreach (var order in PendingOrders)
                 {
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card h-100 border-0 shadow-sm">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card">
                             <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h3 class="h5 card-title mb-0">Pedido #@order.Id</h3>
-                                    <span class="badge bg-@order.StatusColor">@order.Status</span>
-                                </div>
-                                <p class="card-text text-muted">@order.Items</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-clock me-2"></i>
-                                        <small class="text-muted">@order.TimeAgo</small>
-                                    </div>
-                                    <div class="text-end">
-                                        <h4 class="h5 mb-0">@order.Total</h4>
-                                    </div>
-                                </div>
+                                <h5 class="card-title"><i class="bi bi-person-circle me-2"></i>@order.CustomerName</h5>
+                                <p class="card-text text-muted">Pedido #@order.Id</p>
+                                <p class="card-text">Total: <strong>R$ @order.TotalAmount.ToString("N2")</strong></p>
+                                <button class="btn btn-success mt-auto" @onclick="() => CompleteOrder(order.Id)">
+                                    <i class="bi bi-check-lg me-1"></i> Concluir
+                                </button>
                             </div>
                         </div>
                     </div>
                 }
             </div>
-        </div>
+        }
+        else
+        {
+            <p class="text-muted text-center">Nenhum pedido pendente.</p>
+        }
     </section>
 
-    <!-- Popular Items -->
-    <section class="menu-section py-5">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="mb-0">Itens Mais Vendidos</h2>
-                <a href="/cardapio" class="btn btn-outline-primary">Ver Cardápio Completo</a>
-            </div>
-            <div class="row g-4">
-                @foreach (var item in GetPopularItems())
+    <section id="menu" class="menu-section cont">
+        <h2>Cardápio</h2>
+        @if (MenuItems?.Any() == true)
+        {
+            <div class="row g-4 justify-content-center">
+                @foreach (var item in MenuItems)
                 {
-                    <div class="col-md-6 col-lg-3">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <img src="@item.ImageUrl" 
-                                 class="card-img-top" 
-                                 alt="@item.Name" 
-                                 style="height: 160px; object-fit: cover;">
-                            <div class="card-body">
-                                <h3 class="h5 card-title">@item.Name</h3>
-                                <p class="card-text text-muted">@item.Description</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-graph-up me-2"></i>
-                                        <small class="text-muted">@item.Sales vendidos hoje</small>
-                                    </div>
-                                    <h4 class="h5 mb-0">@item.Price</h4>
+                    <div class="col-md-4 col-lg-3 col-sm-6">
+                        <div class="card h-100">
+                            <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" />
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">@item.Name</h5>
+                                <p class="card-text">@item.Description</p>
+                                <p class="card-text"><strong>Preço: </strong>@item.Price.ToString("C")</p>
+                                <div class="d-flex justify-content-between align-items-center mt-auto mb-3">
+                                    <span class="badge bg-@(item.IsAvailable ? "success" : "secondary")">@(item.IsAvailable ? "Disponível" : "Indisponível")</span>
+                                    <button class="btn btn-outline-primary btn-sm" @onclick="() => EditMenuItem(item)">
+                                        <i class="bi bi-pencil"></i> Editar
+                                    </button>
                                 </div>
+                                <button class="btn btn-primary" @onclick="async () => await AddToCart(item)">Adicionar ao Carrinho</button>
                             </div>
                         </div>
                     </div>
                 }
             </div>
-        </div>
+        }
+        else
+        {
+            <p class="text-muted text-center">Nenhum item no menu.</p>
+        }
     </section>
 </div>
 
 @code {
-    private List<Order> GetRecentOrders()
+    private IEnumerable<Order>? PendingOrders { get; set; }
+    private IEnumerable<MenuItem>? MenuItems { get; set; }
+    private IEnumerable<Order>? TodayOrders { get; set; }
+    private decimal TodayRevenue { get; set; }
+
+    // Variáveis para o modal de novo pedido
+    private bool showNewOrderModal = false;
+    private List<MenuItem> selectedOrderItems = new();
+    private string newOrderCustomerName = "";
+
+    protected override async Task OnInitializedAsync()
     {
-        return new List<Order>
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        var restaurant = await RestaurantRepository.GetFirstAsync();
+        if (restaurant != null)
         {
-            new Order
-            {
-                Id = "1001",
-                Status = "Em Preparo",
-                StatusColor = "warning",
-                Items = "2x X-Burger, 1x Batata Frita, 1x Refrigerante",
-                TimeAgo = "5 min atrás",
-                Total = "R$ 45,90"
-            },
-            new Order
-            {
-                Id = "1002",
-                Status = "Entregue",
-                StatusColor = "success",
-                Items = "1x Combo Família, 2x Milk Shake",
-                TimeAgo = "15 min atrás",
-                Total = "R$ 89,90"
-            },
-            new Order
-            {
-                Id = "1003",
-                Status = "Aguardando",
-                StatusColor = "info",
-                Items = "3x X-Tudo, 1x Batata Frita Grande",
-                TimeAgo = "2 min atrás",
-                Total = "R$ 75,90"
-            }
-        };
-    }
-
-    private List<MenuItem> GetPopularItems()
-    {
-        return new List<MenuItem>
+            PendingOrders = await OrderRepository.GetOrdersByStatusAsync(OrderStatus.Pending);
+            MenuItems = await MenuItemRepository.GetMenuItemsByRestaurantAsync(restaurant.Id);
+            TodayOrders = await OrderRepository.GetOrdersByDateAsync(DateTime.Today);
+            TodayRevenue = TodayOrders?.Sum(o => o.TotalAmount) ?? 0;
+        }
+        else
         {
-            new MenuItem
+            PendingOrders = Enumerable.Empty<Order>();
+            MenuItems = Enumerable.Empty<MenuItem>();
+            TodayOrders = Enumerable.Empty<Order>();
+            TodayRevenue = 0;
+        }
+    }
+
+    private async Task CompleteOrder(int orderId)
+    {
+        var order = await OrderRepository.GetByIdAsync(orderId);
+        if (order != null)
+        {
+            order.Status = OrderStatus.Completed;
+            await OrderRepository.UpdateAsync(order);
+            await LoadData(); // Recarrega os dados para atualizar a lista de pedidos pendentes
+        }
+    }
+
+    private void EditMenuItem(MenuItem item)
+    {
+        // TODO: Implementar edição do item
+    }
+
+    private async Task AddToCart(MenuItem item)
+    {
+        // TODO: Implementar lógica do carrinho
+        await Task.CompletedTask;
+    }
+
+    // Funções para o modal de novo pedido
+    private void OpenNewOrderModal()
+    {
+        selectedOrderItems = new List<MenuItem>(); // Limpa seleções anteriores
+        newOrderCustomerName = "";
+        showNewOrderModal = true;
+    }
+
+    private void CloseNewOrderModal()
+    {
+        showNewOrderModal = false;
+    }
+
+    private void ToggleMenuItemSelection(MenuItem item)
+    {
+        if (selectedOrderItems.Contains(item))
+        {
+            selectedOrderItems.Remove(item);
+        }
+        else
+        {
+            selectedOrderItems.Add(item);
+        }
+    }
+
+    private async Task CreateNewOrder()
+    {
+        if (selectedOrderItems.Any() && !string.IsNullOrWhiteSpace(newOrderCustomerName))
+        {
+            var restaurant = await RestaurantRepository.GetFirstAsync();
+            if (restaurant != null)
             {
-                Name = "X-Burger",
-                Description = "Hambúrguer artesanal com queijo e molho especial",
-                ImageUrl = "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=60",
-                Sales = 45,
-                Price = "R$ 19,90"
-            },
-            new MenuItem
-            {
-                Name = "Batata Frita",
-                Description = "Porção de batata frita crocante",
-                ImageUrl = "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800&auto=format&fit=crop&q=60",
-                Sales = 38,
-                Price = "R$ 12,90"
-            },
-            new MenuItem
-            {
-                Name = "Milk Shake",
-                Description = "Milk shake cremoso de chocolate",
-                ImageUrl = "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=800&auto=format&fit=crop&q=60",
-                Sales = 25,
-                Price = "R$ 15,90"
-            },
-            new MenuItem
-            {
-                Name = "Combo Família",
-                Description = "4 hambúrgueres, 2 batatas grandes e 4 refrigerantes",
-                ImageUrl = "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=800&auto=format&fit=crop&q=60",
-                Sales = 15,
-                Price = "R$ 89,90"
+                var newOrder = new Order
+                {
+                    RestaurantId = restaurant.Id,
+                    CustomerName = newOrderCustomerName,
+                    Status = OrderStatus.Pending,
+                    CreatedAt = DateTime.UtcNow,
+                    OrderItems = selectedOrderItems.Select(item => new OrderItem
+                    {
+                        MenuItemId = item.Id,
+                        Quantity = 1, // Simplificado: sempre quantidade 1 para teste
+                        UnitPrice = item.Price,
+                        Subtotal = item.Price
+                    }).ToList(),
+                    TotalAmount = selectedOrderItems.Sum(item => item.Price)
+                };
+
+                await OrderRepository.AddAsync(newOrder);
+                await LoadData(); // Recarrega os pedidos para mostrar o novo
+                CloseNewOrderModal(); // Fecha o modal
             }
-        };
+            // TODO: Adicionar feedback ao usuário se o restaurante não for encontrado
+        }
+        // TODO: Adicionar feedback ao usuário se nenhum item for selecionado ou nome estiver vazio
     }
 
-    private class Order
-    {
-        public string Id { get; set; }
-        public string Status { get; set; }
-        public string StatusColor { get; set; }
-        public string Items { get; set; }
-        public string TimeAgo { get; set; }
-        public string Total { get; set; }
-    }
+}
 
-    private class MenuItem
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string ImageUrl { get; set; }
-        public int Sales { get; set; }
-        public string Price { get; set; }
-    }
+@if (showNewOrderModal)
+{
+    <div class="modal fade show d-block" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Criar Novo Pedido</h5>
+                    <button type="button" class="btn-close" @onclick="CloseNewOrderModal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="customerName" class="form-label">Nome do Cliente</label>
+                        <input type="text" class="form-control" id="customerName" @bind="newOrderCustomerName" />
+                    </div>
+                    <h6>Selecionar Itens do Cardápio:</h6>
+                    @if (MenuItems?.Any() == true)
+                    {
+                        <div class="row g-2">
+                            @foreach (var item in MenuItems)
+                            {
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" @onchange="() => ToggleMenuItemSelection(item)" id="item-@item.Id" checked="@selectedOrderItems.Contains(item)">
+                                        <label class="form-check-label" for="item-@item.Id">
+                                            @item.Name - R$@item.Price.ToString("N2")
+                                        </label>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                         <p class="text-muted">Nenhum item de menu disponível para adicionar a um pedido.</p>
+                    }
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CloseNewOrderModal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" @onclick="CreateNewOrder">Criar Pedido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    // Overlay para o modal
+    <div class="modal-backdrop fade show"></div>
 }

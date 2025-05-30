@@ -2,109 +2,64 @@
 @using Microsoft.AspNetCore.Components.Web
 @inject IJSRuntime JS
 
-<div class="layout-wrapper">
-    <!-- Header -->
-    <header class="header">
-        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="/">
-                    <i class="bi bi-egg-fried text-primary me-2"></i>
-                    <span class="fw-bold">GreatChef</span>
-                </a>
-                
-                <button class="navbar-toggler" type="button" @onclick="ToggleSidebar">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/receitas">
-                                <i class="bi bi-book me-1"></i>Pedidos
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/categorias">
-                                <i class="bi bi-tags me-1"></i>Categorias
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/favoritos">
-                                <i class="bi bi-heart me-1"></i>Favoritos
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/sobre">
-                                <i class="bi bi-info-circle me-1"></i>Sobre
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+<div class="page">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-egg-fried me-2"></i>GreatChef
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-house-door me-1"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#menu"><i class="bi bi-menu-button-wide me-1"></i>Cardápio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pedidos"><i class="bi bi-list-check me-1"></i>Pedidos</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </header>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="container py-4">
-            @Body
         </div>
+    </nav>
+
+    <main>
+        @Body
     </main>
 
-    <!-- Footer -->
-    <footer class="footer border-top">
-        <div class="container py-4">
+    <footer class="footer mt-auto py-3 bg-dark text-light">
+        <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h5 class="mb-3">GreatChef</h5>
-                    <p class="text-muted">Descubra e compartilhe suas melhores receitas com o mundo.</p>
+                    <h5><i class="bi bi-egg-fried me-2"></i>GreatChef</h5>
+                    <p class="text-muted">Gerencie seu restaurante de forma moderna e eficiente.</p>
                 </div>
                 <div class="col-md-4">
-                    <h5 class="mb-3">Links Úteis</h5>
+                    <h5>Links Úteis</h5>
                     <ul class="list-unstyled">
-                        <li><a href="/receitas" class="text-decoration-none text-muted">Receitas</a></li>
-                        <li><a href="/categorias" class="text-decoration-none text-muted">Categorias</a></li>
-                        <li><a href="/favoritos" class="text-decoration-none text-muted">Favoritos</a></li>
+                        <li><a href="/" class="text-muted text-decoration-none">Home</a></li>
+                        <li><a href="#menu" class="text-muted text-decoration-none">Cardápio</a></li>
+                        <li><a href="#pedidos" class="text-muted text-decoration-none">Pedidos</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
-                    <h5 class="mb-3">Contato</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="mailto:contato@greatchef.com" class="text-decoration-none text-muted">
-                            <i class="bi bi-envelope me-2"></i>contato@greatchef.com
-                        </a></li>
-                        <li class="mt-2">
-                            <a href="#" class="text-decoration-none text-muted me-2">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" class="text-decoration-none text-muted me-2">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                            <a href="#" class="text-decoration-none text-muted">
-                                <i class="bi bi-youtube"></i>
-                            </a>
-                        </li>
+                    <h5>Contato</h5>
+                    <ul class="list-unstyled ">
+                        <li ><i class="bi bi-envelope me-2 "></i>contato@greatchef.com</li>
+                        <li><i class="bi bi-telephone me-2 "></i>(11) 99999-9999</li>
                     </ul>
                 </div>
             </div>
-            <hr class="my-4">
+            <hr class="mt-4 mb-3">
             <div class="text-center text-muted">
-                <small>&copy; @DateTime.Now.Year GreatChef. Todos os direitos reservados.</small>
+                <small>&copy; 2024 GreatChef. Todos os direitos reservados.</small>
             </div>
         </div>
     </footer>
-</div>
-
-<!-- Error UI -->
-<div id="blazor-error-ui" class="alert alert-danger position-fixed bottom-0 end-0 m-3" role="alert">
-    <div class="d-flex align-items-center">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i>
-        <span>Ocorreu um erro não tratado.</span>
-    </div>
-    <div class="mt-2">
-        <a href="" class="btn btn-sm btn-outline-danger me-2">Recarregar</a>
-        <button class="btn btn-sm btn-outline-danger" @onclick="DismissError">Fechar</button>
-    </div>
 </div>
 
 @code {

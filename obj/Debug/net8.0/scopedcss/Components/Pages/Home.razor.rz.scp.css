@@ -176,10 +176,17 @@
 .container[b-iwg1d3kz0d] {
     max-width: 1200px;
     padding: 0 1.5rem;
+    
+}
+
+.cont[b-iwg1d3kz0d] {
+    max-width: 9999px;
+    margin: 20px;
+    padding: 0 1.5rem;
 }
 
 .row[b-iwg1d3kz0d] {
-    margin: 0 -1rem;
+    margin: 0 1.5rem;
 }
 
 .col-md-3[b-iwg1d3kz0d],
@@ -192,11 +199,13 @@
 /* Ajustes de texto */
 .card[b-iwg1d3kz0d] {
     color: #fff;
+    margin-bottom: 20px;
 }
 
 .card-body[b-iwg1d3kz0d] {
     color: #fff;
     padding: 1.5rem;
+    margin-bottom: 10px;
 }
 
 h1[b-iwg1d3kz0d],
@@ -206,6 +215,7 @@ h4[b-iwg1d3kz0d],
 h5[b-iwg1d3kz0d],
 h6[b-iwg1d3kz0d] {
     color: #fff;
+    margin-top: 20px;
 }
 
 p[b-iwg1d3kz0d] {

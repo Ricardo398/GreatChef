@@ -1,0 +1,523 @@
+/*===== BASE STYLES & UTILITIES =====*/
+
+:root {
+    --primary-color: #FF6B6B;
+    /* Tom de pêssego/salmão para destaque */
+    --secondary-color: #4ECDC4;
+    /* Azul-água para elementos secundários */
+    --dark-background: #1C1C1E;
+    /* Fundo escuro principal */
+    --dark-surface: #2C2C2E;
+    /* Superfícies de cards e seções */
+    --text-light: #E0E0E0;
+    /* Texto principal claro */
+    --text-muted: #A9A9AE;
+    /* Texto secundário/descrições */
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-radius-sm: 0.5rem;
+    --border-radius-md: 1rem;
+    --border-radius-lg: 1.5rem;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--dark-background);
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+p {
+    color: var(--text-muted);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+    color: var(--secondary-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.row {
+    margin: 0 -0.75rem;
+}
+
+.row>div {
+    padding: 0 0.75rem;
+}
+
+.card {
+    background-color: var(--dark-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 4px 15px var(--shadow-color);
+    overflow: hidden;
+    /* Para bordas arredondadas da imagem */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+.card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.btn {
+    border-radius: var(--border-radius-sm);
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--dark-background);
+}
+
+.btn-primary:hover {
+    background-color: #FF8E72;
+    /* Um pouco mais claro */
+    border-color: #FF8E72;
+    color: var(--dark-background);
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-color: transparent;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: var(--dark-background);
+    transform: translateY(-2px);
+}
+
+.badge {
+    border-radius: var(--border-radius-sm);
+    padding: 0.3em 0.6em;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+.bg-success {
+    background-color: var(--secondary-color) !important;
+    color: var(--dark-background) !important;
+}
+
+.bg-secondary {
+    background-color: var(--text-muted) !important;
+    color: var(--dark-background) !important;
+}
+
+/*===== NAVBAR & FOOTER =====*/
+
+.navbar {
+    background-color: var(--dark-background) !important;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--text-light) !important;
+}
+
+.navbar-brand:hover {
+    color: var(--primary-color) !important;
+}
+
+.nav-link {
+    color: var(--text-light) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    transition: color 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+.footer {
+    background-color: var(--dark-background) !important;
+    border-top: 1px solid var(--border-color);
+    padding: 1.5rem 0;
+    color: var(--text-muted);
+}
+
+.footer h5 {
+    color: var(--text-light);
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+}
+
+.footer a {
+    color: var(--text-muted);
+}
+
+.footer a:hover {
+    color: var(--primary-color);
+}
+
+.footer .list-unstyled li {
+    margin-bottom: 0.5rem;
+}
+
+.footer .text-center {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/*===== HOME PAGE SECTIONS =====*/
+
+.home-page {
+    background: var(--dark-background);
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+.cont {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.hero-section {
+    position: relative;
+    height: 80vh;
+    /* Altura ajustada */
+    background-image: linear-gradient(to bottom, rgba(28, 28, 30, 0.8), rgba(28, 28, 30, 0.8)), url('/images/hero-bg.jpg');
+    /* Gradiente mais escuro */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    text-align: center;
+    padding: 6rem 0 3rem 0;
+    margin-bottom: 0;
+    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+    /* Bordas arredondadas apenas embaixo */
+    box-shadow: 0 8px 32px var(--shadow-color);
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    /* Tamanho maior */
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+
+.hero-section .lead {
+    font-size: 1.25rem;
+    color: var(--text-light);
+    margin-bottom: 2.5rem;
+}
+
+.hero-section .btn {
+    padding: 0.9rem 2rem;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0.5rem;
+}
+
+.stats-section,
+.orders-section,
+.menu-section {
+    background-color: var(--dark-surface);
+    /* Fundo das seções */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    margin: 3rem auto;
+    /* Mais espaço */
+    padding: 3rem 1rem;
+    /* Mais preenchimento */
+    box-shadow: 0 6px 20px var(--shadow-color);
+}
+
+.stats-section h2,
+.orders-section h2,
+.menu-section h2 {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.stats-section .card {
+    text-align: center;
+    background-color: transparent;
+    /* Fundo transparente para seções */
+    border: none;
+    box-shadow: none;
+    transition: transform 0.2s ease-in-out;
+}
+
+.stats-section .card:hover {
+    transform: translateY(-5px);
+}
+
+.stats-section .bi {
+    font-size: 3rem;
+    /* Ícones maiores */
+    color: var(--primary-color);
+    margin-bottom: 0.8rem;
+    transition: color 0.2s ease-in-out;
+}
+
+.stats-section .card:hover .bi {
+    color: var(--secondary-color);
+}
+
+.stats-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.stats-section p {
+    font-size: 2.5rem;
+    /* Números maiores */
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.orders-section h2 {
+    font-size: 2rem;
+}
+
+.orders-section .card {
+    text-align: left;
+    /* Pedidos alinhados à esquerda */
+}
+
+.menu-section h2 {
+    font-size: 2rem;
+}
+
+.menu-section .card-img-top {
+    border-top-left-radius: var(--border-radius-md);
+    border-top-right-radius: var(--border-radius-md);
+    height: 220px;
+    /* Altura fixa para imagens */
+    object-fit: cover;
+}
+
+.menu-section .card-body .card-text strong {
+    color: var(--text-light);
+}
+
+.menu-section .card-body .d-flex {
+    align-items: center;
+}
+
+.menu-section .card-body .badge {
+    flex-shrink: 0;
+    /* Evitar que o badge diminua */
+    margin-right: 0.75rem;
+    /* Espaço entre badge e botão */
+}
+
+.menu-section .card-body .btn-outline-primary {
+    flex-shrink: 0;
+    /* Evitar que o botão diminua */
+}
+
+/*===== RESPONSIVE ADJUSTMENTS =====*/
+
+@media (max-width: 992px) {
+    .hero-section h1 {
+        font-size: 2.8rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1.1rem;
+    }
+
+    .stats-section p {
+        font-size: 2rem;
+    }
+
+    .stats-section .bi {
+        font-size: 2.5rem;
+    }
+
+    .orders-section h2,
+    .menu-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .menu-section .card-img-top {
+        height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        height: 60vh;
+        padding: 4rem 0 2rem 0;
+    }
+
+    .hero-section h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .hero-section .btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
+        margin: 0 0.25rem;
+    }
+
+    .stats-section,
+    .orders-section,
+    .menu-section {
+        margin: 2rem auto;
+        padding: 2rem 0.75rem;
+    }
+
+    .stats-section .card-body {
+        padding: 1rem;
+    }
+
+    .stats-section h3 {
+        font-size: 1.3rem;
+    }
+
+    .stats-section p {
+        font-size: 1.8rem;
+    }
+
+    .stats-section .bi {
+        font-size: 2rem;
+    }
+
+    .orders-section h2,
+    .menu-section h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .menu-section .card-img-top {
+        height: 160px;
+    }
+}
+
+@media (max-width: 576px) {
+    .row>div {
+        padding: 0 0.5rem;
+    }
+
+    .stats-section,
+    .orders-section,
+    .menu-section {
+        margin: 1.5rem auto;
+        padding: 1.5rem 0.5rem;
+    }
+
+    .hero-section {
+        height: 50vh;
+        padding: 3rem 0 1.5rem 0;
+    }
+
+    .hero-section h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-section .lead {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-section .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+        margin: 0 0.2rem;
+    }
+
+    .stats-section h3 {
+        font-size: 1.1rem;
+    }
+
+    .stats-section p {
+        font-size: 1.5rem;
+    }
+
+    .stats-section .bi {
+        font-size: 1.8rem;
+    }
+
+    .orders-section h2,
+    .menu-section h2 {
+        font-size: 1.4rem;
+    }
+
+    .menu-section .card-img-top {
+        height: 140px;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+    }
+
+    .card-text {
+        font-size: 0.85rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+    }
+}
+
+/* Reset Bootstrap overrides if necessary */
+/* Add custom styles below */
